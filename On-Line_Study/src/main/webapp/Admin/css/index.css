@@ -1,0 +1,25 @@
+@CHARSET "UTF-8";
+#content{
+margin-top: 1%;
+}
+#userinfo{
+	text-align: center;
+	font-size: 15px;
+}
+#fenye{
+	text-align: center;
+	font-size: 20px;
+
+}
+#fenye{
+	margin: 20px;
+}
+#fenye a{
+	margin: 5px;
+	background-color:#DBFEF8;
+}
+#ur{
+	margin-top: 8px;
+	margin-bottom: -10px;
+	font-size: 15px;
+}

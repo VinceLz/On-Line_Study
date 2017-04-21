@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<session-factory>
+
+		<!-- 配置 hibernate 的基本属性 -->
+
+		<!-- 方言 -->
+		<property name="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</property>
+		<!-- 是否显示及格式化 SQL -->
+		<property name="hibernate.show_sql">true</property>
+		<property name="hibernate.format_sql">true</property>
+
+		<!-- 生成数据表的策略 -->
+		<property name="hibernate.hbm2ddl.auto">update</property>
+
+		<!-- 二级缓存相关 暫用 -->
+		<mapping class="com.xawl.study.model.Comment" />
+		<mapping class="com.xawl.study.model.Student" />
+		<mapping class="com.xawl.study.model.Resource" />
+		<mapping class="com.xawl.study.model.Interest" />
+		<mapping class="com.xawl.study.model.CustomClassTable" />
+		<mapping class="com.xawl.study.model.ClassLog" />
+		<mapping class="com.xawl.study.model.Administrator" />
+		<mapping class="com.xawl.study.model.MenuModel" />
+		<mapping class="com.xawl.study.model.IndexModel" />
+		<mapping class="com.xawl.study.model.Province" />
+		<mapping class="com.xawl.study.model.City" />
+		<mapping class="com.xawl.study.model.Area" />
+		<mapping class="com.xawl.study.model.Category" />
+		<mapping class="com.xawl.study.model.Forum" />
+		<mapping class="com.xawl.study.model.Forum_category" />
+		<mapping class="com.xawl.study.model.Login_Log" />
+		<mapping class="com.xawl.study.model.Acc_Log" />
+		<mapping class="com.xawl.study.model.Res_Support" />
+		<mapping class="com.xawl.study.model.Err_Log" />
+
+		<mapping class="com.xawl.study.model.Paper" />
+
+		<mapping class="com.xawl.study.model.Question" />
+		<mapping class="com.xawl.study.model.Exam" />
+		<mapping class="com.xawl.study.model.ClassName" />
+	</session-factory>
+
+</hibernate-configuration>

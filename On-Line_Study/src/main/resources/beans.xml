@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+			http://www.springframework.org/schema/beans/spring-beans-4.0.xsd 
+			http://www.springframework.org/schema/mvc 
+			http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd 
+			http://www.springframework.org/schema/context 
+			http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+			http://www.springframework.org/schema/aop 
+			http://www.springframework.org/schema/aop/spring-aop-4.0.xsd 
+			http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 		
+			">
+	<context:annotation-config />
+	<!-- 开启注解扫描 -->
+	<context:component-scan
+		base-package="com.xawl.study.dao,com.xawl.study.servlet,com.xawl.study.service" />
+	<!-- 2.数据库链接jdbc.properties文件 -->
+	<context:property-placeholder location="classpath:jdbc.properties" />
+
+
+	<!-- 3.数据源DataSource -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driverClassName}" />
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<property name="user" value="${jdbc.username}" />
+		<property name="password" value="${jdbc.password}" />
+		<property name="maxPoolSize" value="${c3p0.pool.maxPoolSize}" />
+		<property name="minPoolSize" value="${c3p0.pool.minPoolSize}" />
+		<property name="initialPoolSize" value="${c3p0.pool.initialPoolSize}" />
+		<property name="acquireIncrement" value="${c3p0.pool.acquireIncrement}" />
+		<property name="idleConnectionTestPeriod" value="${c3p0.idleConnectionTestPeriod}"></property>
+		<property name="testConnectionOnCheckin" value="${c3p0.testConnectionOnCheckin}"></property>
+		<property name="testConnectionOnCheckout" value="${c3p0.testConnectionOnCheckout}"></property>
+		<property name="maxIdleTime" value="${c3p0.maxIdleTime}"></property>
+		<!-- <property name="preferredTestQuery 这个是测试用的，一般不需要" value="select 1"></property> -->
+	</bean>
+
+
+
+	<!-- 配置 SessionFactory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="configLocation" value="classpath:hibernate.cfg.xml"></property>
+		<property name="mappingLocations" value="classpath:com/xawl/study/model/*.hbm.xml"></property>
+	</bean>
+
+
+
+	<!-- 配置 Spring 的声明式事务 -->
+	<!-- 1. 配置 hibernate 的事务管理器 -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="Add*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="Update*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="Delete*" propagation="REQUIRED" read-only="false"
+				rollback-for="java.lang.Exception" />
+			<tx:method name="*" propagation="REQUIRED" read-only="false" />
+
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut expression="execution(* com.xawl.study.service.*.*(..))"
+			id="txPointCut" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut" />
+	</aop:config>
+
+</beans>
