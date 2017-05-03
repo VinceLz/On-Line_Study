@@ -29,6 +29,7 @@ import com.xawl.study.model.Page;
 import com.xawl.study.model.Res_Support;
 import com.xawl.study.model.Resource;
 import com.xawl.study.model.Student;
+import com.xawl.study.model.Teach_Class;
 import com.xawl.study.service.CategoryService;
 import com.xawl.study.service.CommentService;
 import com.xawl.study.service.IndexModelService;
@@ -288,16 +289,16 @@ public class ResourceServlet extends BaseServlets {
 		List<MenuModel> menuList = menuService.findAllUseMenu();
 		request.setAttribute("menuList", menuList);
 
-//		// ---获取启用的首页方案---
-//		ImageUtil util = new ImageUtil();
-//		IndexModel indexModel = new IndexModel();
-//		indexModel = indexModelService.findUseModel();
+		// // ---获取启用的首页方案---
+		// ImageUtil util = new ImageUtil();
+		// IndexModel indexModel = new IndexModel();
+		// indexModel = indexModelService.findUseModel();
 
-//		String LogoSrc = indexModel.getLogoImageSrc();
-//		String newLogoSrc = LogoSrc;
-//		indexModel.setLogoImageSrc(newLogoSrc);
-//
-//		request.setAttribute("indexModel", indexModel);
+		// String LogoSrc = indexModel.getLogoImageSrc();
+		// String newLogoSrc = LogoSrc;
+		// indexModel.setLogoImageSrc(newLogoSrc);
+		//
+		// request.setAttribute("indexModel", indexModel);
 
 		// ---获取兴趣方向---
 		List<Interest> interestList = interestService.findAllInterest();
@@ -332,7 +333,22 @@ public class ResourceServlet extends BaseServlets {
 							page.getTotalPage());
 		}
 		// ---获取资源---
-		List<Resource> resourceList = resourceService.findAllResource(page);
+
+		// 判断当前用户是否登陆了
+		Student attribute = (Student) request.getSession().getAttribute("user");
+		String sql = "0";
+		if (attribute != null) {
+			// 获取当前学生的所有老师id
+			int classId = attribute.getClassId().getClassId();
+			List<Teach_Class> findByClassid = studentService
+					.findByClassid(classId + "");
+			for (Teach_Class t : findByClassid) {
+				sql = sql + "," + t.getAid();
+			}
+		}
+
+		List<Resource> resourceList = resourceService
+				.findAllResource(page, sql);
 		for (int i = 0; i < resourceList.size(); i++) {// 限制长度
 
 			/*
@@ -379,16 +395,16 @@ public class ResourceServlet extends BaseServlets {
 		List<MenuModel> menuList = menuService.findAllUseMenu();
 		request.setAttribute("menuList", menuList);
 
-//		// ---获取启用的首页方案---
-//		ImageUtil util = new ImageUtil();
-//		IndexModel indexModel = new IndexModel();
-//		indexModel = indexModelService.findUseModel();
-//
-//		String LogoSrc = indexModel.getLogoImageSrc();
-//		String newLogoSrc = LogoSrc;
-//		indexModel.setLogoImageSrc(newLogoSrc);
-//
-//		request.setAttribute("indexModel", indexModel);
+		// // ---获取启用的首页方案---
+		// ImageUtil util = new ImageUtil();
+		// IndexModel indexModel = new IndexModel();
+		// indexModel = indexModelService.findUseModel();
+		//
+		// String LogoSrc = indexModel.getLogoImageSrc();
+		// String newLogoSrc = LogoSrc;
+		// indexModel.setLogoImageSrc(newLogoSrc);
+		//
+		// request.setAttribute("indexModel", indexModel);
 
 		// ---获取兴趣方向---
 		List<Interest> interestList = interestService.findAllInterest();
@@ -422,9 +438,21 @@ public class ResourceServlet extends BaseServlets {
 					resourceService.findAllDocumentResourceCount(),
 					page.getTotalPage());
 		}
+		// 判断当前用户是否登陆了
+		Student attribute = (Student) request.getSession().getAttribute("user");
+		String sql = "0";
+		if (attribute != null) {
+			// 获取当前学生的所有老师id
+			int classId = attribute.getClassId().getClassId();
+			List<Teach_Class> findByClassid = studentService
+					.findByClassid(classId + "");
+			for (Teach_Class t : findByClassid) {
+				sql = sql + "," + t.getAid();
+			}
+		}
 		// ---获取资源---
-		List<Resource> resourceList = resourceService
-				.findAllDocumentResource(page);
+		List<Resource> resourceList = resourceService.findAllDocumentResource(
+				page, sql);
 		for (int i = 0; i < resourceList.size(); i++) {// 限制长度
 			String newChar = resourceList
 					.get(i)
@@ -464,7 +492,7 @@ public class ResourceServlet extends BaseServlets {
 			HttpServletResponse response) throws ServletException, IOException {
 
 		servletUtil.GetNotRedMessageCountToRequest(request);// 将未读的消息数量放入到用户request中
-	
+
 		// 菜单
 		List<MenuModel> menuList = menuService.findAllUseMenu();
 		request.setAttribute("menuList", menuList);
@@ -533,9 +561,9 @@ public class ResourceServlet extends BaseServlets {
 			HttpServletResponse response) throws ServletException, IOException {
 		servletUtil.GetNotRedMessageCountToRequest(request);// 将未读的消息数量放入到用户request中
 		// 首页方案
-//		IndexModel indexModel = new IndexModel();
-//		indexModel = indexModelService.findUseModel();
-//		request.setAttribute("indexModel", indexModel);
+		// IndexModel indexModel = new IndexModel();
+		// indexModel = indexModelService.findUseModel();
+		// request.setAttribute("indexModel", indexModel);
 		// 菜单
 		List<MenuModel> menuList = menuService.findAllUseMenu();
 		request.setAttribute("menuList", menuList);

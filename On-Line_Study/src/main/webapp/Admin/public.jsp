@@ -112,7 +112,8 @@
 						<ul class="dropdown-menu extended tasks-bar">
 							<div class="notify-arrow notify-arrow-green"></div>
 							<li>
-								<p class="green">You have 4 pending tasks</p></li>
+								<p class="green">You have 4 pending tasks</p>
+							</li>
 							<li><a href="index.html#">
 									<div class="task-info">
 										<div class="desc">DashGum Admin Panel</div>
@@ -124,7 +125,8 @@
 											aria-valuemax="100" style="width: 40%">
 											<span class="sr-only">40% Complete (success)</span>
 										</div>
-									</div> </a></li>
+									</div> </a>
+							</li>
 							<li><a href="index.html#">
 									<div class="task-info">
 										<div class="desc">Database Update</div>
@@ -136,7 +138,8 @@
 											aria-valuemax="100" style="width: 60%">
 											<span class="sr-only">60% Complete (warning)</span>
 										</div>
-									</div> </a></li>
+									</div> </a>
+							</li>
 							<li><a href="index.html#">
 									<div class="task-info">
 										<div class="desc">Product Development</div>
@@ -148,7 +151,8 @@
 											style="width: 80%">
 											<span class="sr-only">80% Complete</span>
 										</div>
-									</div> </a></li>
+									</div> </a>
+							</li>
 							<li><a href="index.html#">
 									<div class="task-info">
 										<div class="desc">Payments Sent</div>
@@ -160,9 +164,12 @@
 											aria-valuemax="100" style="width: 70%">
 											<span class="sr-only">70% Complete (Important)</span>
 										</div>
-									</div> </a></li>
-							<li class="external"><a href="#">See All Tasks</a></li>
-						</ul></li>
+									</div> </a>
+							</li>
+							<li class="external"><a href="#">See All Tasks</a>
+							</li>
+						</ul>
+					</li>
 					<!-- settings end -->
 					<!-- inbox dropdown start-->
 					<li id="header_inbox_bar" class="dropdown"><a
@@ -172,29 +179,36 @@
 						<ul class="dropdown-menu extended inbox">
 							<div class="notify-arrow notify-arrow-green"></div>
 							<li>
-								<p class="green">You have 5 new messages</p></li>
+								<p class="green">You have 5 new messages</p>
+							</li>
 							<li><a href="index.html#"> <span class="photo"><img
 										alt="avatar" src="assets/img/ui-zac.jpg"> </span> <span
 									class="subject"> <span class="from">Zac Snider</span> <span
 										class="time">Just now</span> </span> <span class="message"> Hi
-										mate, how is everything? </span> </a></li>
+										mate, how is everything? </span> </a>
+							</li>
 							<li><a href="index.html#"> <span class="photo"><img
 										alt="avatar" src="assets/img/ui-divya.jpg"> </span> <span
 									class="subject"> <span class="from">Divya Manian</span>
 										<span class="time">40 mins.</span> </span> <span class="message">
-										Hi, I need your help with this. </span> </a></li>
+										Hi, I need your help with this. </span> </a>
+							</li>
 							<li><a href="index.html#"> <span class="photo"><img
 										alt="avatar" src="assets/img/ui-danro.jpg"> </span> <span
 									class="subject"> <span class="from">Dan Rogers</span> <span
 										class="time">2 hrs.</span> </span> <span class="message"> Love
-										your new Dashboard. </span> </a></li>
+										your new Dashboard. </span> </a>
+							</li>
 							<li><a href="index.html#"> <span class="photo"><img
 										alt="avatar" src="assets/img/ui-sherman.jpg"> </span> <span
 									class="subject"> <span class="from">Dj Sherman</span> <span
 										class="time">4 hrs.</span> </span> <span class="message">
-										Please, answer asap. </span> </a></li>
-							<li><a href="index.html#">See all messages</a></li>
-						</ul></li>
+										Please, answer asap. </span> </a>
+							</li>
+							<li><a href="index.html#">See all messages</a>
+							</li>
+						</ul>
+					</li>
 					<!-- inbox dropdown end -->
 				</ul>
 				<!--  notification end -->
@@ -202,11 +216,9 @@
 			<div class="top-menu">
 				<ul class="nav pull-right top-menu">
 					<li><a class="logout"
-						href='<c:url value="/index.jsp"></c:url>'>前台首页</a>
-					</li>
+						href='<c:url value="/index.jsp"></c:url>'>前台首页</a></li>
 					<li><a class="logout"
-						href='<c:url value="Admin/index.jsp"></c:url>'>首页</a>
-					</li>
+						href='<c:url value="Admin/index.jsp"></c:url>'>首页</a></li>
 					<li><a class="logout"
 						href='<c:url value="/AdminLoginOutServlet?method=logout"></c:url>'>退出</a>
 					</li>
@@ -228,31 +240,30 @@
 						width="60"> </a>
 				</p>
 				<h5 class="centered">${nakename }</h5>
+				<c:if test="${admin_teacher.rank eq 0}">
+					<li class="sub-menu"><a href="javascript:;"> <i
+							class="fa fa-desktop"></i> <span>用户管理</span> </a>
+						<ul class="sub">
+							<li><a
+								href="<c:url value='/AdminShowUserInfoServlet?method=showinfoonly&count=${count }&page=${page }'></c:url>">查看所有用户</a>
+							</li>
+							<li><a
+								href="<c:url value='/AdminShowUserInfoServlet?method=adminadduser'></c:url>">添加用户</a>
+							</li>
+						</ul></li>
 
-				<li class="sub-menu"><a href="javascript:;"> <i
-						class="fa fa-desktop"></i> <span>用户管理</span> </a>
-					<ul class="sub">
-						<li><a
-							href="<c:url value='/AdminShowUserInfoServlet?method=showinfoonly&count=${count }&page=${page }'></c:url>">查看所有用户</a>
-						</li>
-						<li><a
-							href="<c:url value='/AdminShowUserInfoServlet?method=adminadduser'></c:url>">添加用户</a>
-						</li>
-					</ul>
-				</li>
 
-				<li class="sub-menu"><a href="javascript:;"> <i
-						class="fa fa-cogs"></i> <span>管理员管理</span> </a>
-					<ul class="sub">
-						<li><a
-							href="<c:url value='/AdminInfoServlet?method=showinfoonly&count=${count }&page=${page }'></c:url>">管理员列表</a>
-						</li>
-						<li><a
-							href="<c:url value='/AdminInfoServlet?method=addadminForword'></c:url>">添加管理员</a>
-						</li>
-					</ul>
-				</li>
-
+					<li class="sub-menu"><a href="javascript:;"> <i
+							class="fa fa-cogs"></i> <span>管理员管理</span> </a>
+						<ul class="sub">
+							<li><a
+								href="<c:url value='/AdminInfoServlet?method=showinfoonly&count=${count }&page=${page }'></c:url>">管理员列表</a>
+							</li>
+							<li><a
+								href="<c:url value='/AdminInfoServlet?method=addadminForword'></c:url>">添加管理员</a>
+							</li>
+						</ul></li>
+				</c:if>
 				<li class="sub-menu"><a href="javascript:;"> <i
 						class="glyphicon glyphicon-tags"></i> <span>资源种类管理</span> </a>
 					<ul class="sub">
@@ -262,8 +273,7 @@
 						<li><a
 							href="<c:url value='/AdminCategoryServlet?method=showAddCategory'/>">增加资源种类</a>
 						</li>
-					</ul>
-				</li>
+					</ul></li>
 
 
 				<li class="sub-menu"><a href="javascript:;"> <i
@@ -275,8 +285,7 @@
 						<li><a
 							href="<c:url value='/AdminResourceServlet?method=showAllResource&count=5&page=1'/>">查看所有资源</a>
 						</li>
-					</ul>
-				</li>
+					</ul></li>
 
 
 
@@ -295,65 +304,57 @@
 						<li><a
 							href="<c:url value='/AdminManageInterestServlet?method=AddInterestCategory'></c:url>">添加兴趣细则</a>
 						</li>
-					</ul>
-				</li>
+					</ul></li>
 
 
 				<li class="sub-menu"><a href="javascript:;"> <i
 						class="fa fa-tasks"></i> <span>论坛管理</span> </a>
 					<ul class="sub">
-						<li><a href="form_component.html">待审核帖子</a>
-						</li>
-						<li><a href="form_component.html">待审核言论</a>
-						</li>
-						<li><a href="form_component.html">帖子管理</a>
-						</li>
-					</ul>
-				</li>
+						<li><a href="form_component.html">待审核帖子</a></li>
+						<li><a href="form_component.html">待审核言论</a></li>
+						<li><a href="form_component.html">帖子管理</a></li>
+					</ul></li>
 
 
-
-				<li class="sub-menu"><a href="javascript:;"> <i
-						class="fa fa-th"></i> <span>菜单管理</span> </a>
-					<ul class="sub">
-						<li><a
-							href="<c:url value='/AdminMenuServlet?method=showAllMenu'/>">查看菜单</a>
-						</li>
-						<li><a
-							href="<c:url value='/AdminMenuServlet?method=showMenuOrder'/>">调整顺序</a>
-						</li>
-						<li><a
-							href="<c:url value='/AdminMenuServlet?method=addMenuFirst'/>">增加菜单</a>
-						</li>
-					</ul>
-				</li>
-
-				<li class="sub-menu"><a href="javascript:;"> <i
-						class="fa fa-bookmark-o"></i> <span>首页管理</span> </a>
-					<ul class="sub">
-						<li><a
-							href="<c:url value='/AdminIndexServlet?method=showAllIndexDoor'/>">查看首页方案</a>
-						</li>
-						<li><a
-							href="<c:url value='/AdminIndexServlet?method=addIndexFirst'/>">增加首页方案</a>
-						</li>
-					</ul>
-				</li>
-
+				<c:if test="${admin_teacher.rank eq 0}">
+					<li class="sub-menu"><a href="javascript:;"> <i
+							class="fa fa-th"></i> <span>菜单管理</span> </a>
+						<ul class="sub">
+							<li><a
+								href="<c:url value='/AdminMenuServlet?method=showAllMenu'/>">查看菜单</a>
+							</li>
+							<li><a
+								href="<c:url value='/AdminMenuServlet?method=showMenuOrder'/>">调整顺序</a>
+							</li>
+							<li><a
+								href="<c:url value='/AdminMenuServlet?method=addMenuFirst'/>">增加菜单</a>
+							</li>
+						</ul></li>
+				</c:if>
+				<c:if test="${admin_teacher.rank eq 0}">
+					<li class="sub-menu"><a href="javascript:;"> <i
+							class="fa fa-bookmark-o"></i> <span>首页管理</span> </a>
+						<ul class="sub">
+							<li><a
+								href="<c:url value='/AdminIndexServlet?method=showAllIndexDoor'/>">查看首页方案</a>
+							</li>
+							<li><a
+								href="<c:url value='/AdminIndexServlet?method=addIndexFirst'/>">增加首页方案</a>
+							</li>
+						</ul></li>
+				</c:if>
 				<li class="sub-menu"><a href="javascript:;"> <i
 						class="fa fa-bookmark-o"></i> <span>考试管理</span> </a>
 					<ul class="sub">
-						<li><a
-							href="<c:url value='/AdminIndexServlet?method=showAllIndexDoor'/>">查看考试情况</a>
+						<li><a href="<c:url value='/ExamServlet?method=showAll'/>">查看考试情况</a>
 						</li>
 						<li><a
-							href="<c:url value='/AdminIndexServlet?method=addIndexFirst'/>">试卷管理</a>
+							href="<c:url value='/ExamServlet?method=showAllPaper'/>">试卷管理</a>
 						</li>
 						<li><a
 							href="<c:url value='/ExamServlet?method=addQuestPre'/>">考题录入</a>
 						</li>
-					</ul>
-				</li>
+					</ul></li>
 				<li class="sub-menu"><a href="javascript:;"> <i
 						class=" fa fa-bar-chart-o"></i> <span>个人中心</span> </a>
 					<ul class="sub">
@@ -366,12 +367,9 @@
 						<li><a
 							href="<c:url value='AdminInfoServlet?method=ChangPwd'/>">修改密码</a>
 						</li>
-						<li><a href="chartjs.html"></a>
-						</li>
-						<li><a href="chartjs.html"></a>
-						</li>
-					</ul>
-				</li>
+						<li><a href="chartjs.html"></a></li>
+						<li><a href="chartjs.html"></a></li>
+					</ul></li>
 
 			</ul>
 			<!-- sidebar menu end-->

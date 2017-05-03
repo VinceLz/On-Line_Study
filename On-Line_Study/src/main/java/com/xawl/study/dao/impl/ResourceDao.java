@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.xawl.study.model.Page;
 import com.xawl.study.model.Resource;
+
 @Repository
 public class ResourceDao extends BaseDaoImpl {
 
@@ -26,10 +27,11 @@ public class ResourceDao extends BaseDaoImpl {
 	}
 
 	// 查找所有视频资源
-	public List<Resource> findAllResource(Page page) {
+	public List<Resource> findAllResource(Page page, String sql) {
 		Session session = getSessionFactory().getCurrentSession();
 		Query query = session
-				.createQuery("from Resource  r where r.resourceType=0");
+				.createQuery("from Resource  r where r.resourceType=0 and r.type in ("
+						+ sql + ")");
 		// 设置每页显示多少个，设置多大结果。
 		query.setMaxResults(page.getEveryPage());
 		// 设置起点
@@ -39,10 +41,11 @@ public class ResourceDao extends BaseDaoImpl {
 	}
 
 	// 查找所有文档资源
-	public List<Resource> findAllDocumentResource(Page page) {
+	public List<Resource> findAllDocumentResource(Page page, String sql) {
 		Session session = getSessionFactory().getCurrentSession();
 		Query query = session
-				.createQuery("from Resource  r where r.resourceType=1");
+				.createQuery("from Resource  r where r.resourceType=1 and r.type in ("
+						+ sql + ")");
 		// 设置每页显示多少个，设置多大结果。
 		query.setMaxResults(page.getEveryPage());
 		// 设置起点
@@ -326,6 +329,29 @@ public class ResourceDao extends BaseDaoImpl {
 		List<Resource> rescourceList = query.list();
 
 		return rescourceList;
+	}
+
+	public List<Resource> queryByPage(Page page, int id) {
+		List<Resource> resourceList = new ArrayList<Resource>();
+		Session session = getSessionFactory().getCurrentSession();
+		Query query = session.createQuery("from Resource r where r.type=" + id);
+		// 设置每页显示多少个，设置多大结果。
+		query.setMaxResults(page.getEveryPage());
+		// 设置起点
+		query.setFirstResult(page.getBeginIndex());
+		resourceList = query.list();
+
+		return resourceList;
+	}
+
+	public int CountResource(int id) {
+		int sum = 0;
+		Session session = getSessionFactory().getCurrentSession();
+		Query query = session.createQuery("from Resource r where r.type=" + id);
+		List<Resource> resourceList = new ArrayList<Resource>();
+		resourceList = query.list();
+		sum = resourceList.size();
+		return sum;
 	}
 
 }

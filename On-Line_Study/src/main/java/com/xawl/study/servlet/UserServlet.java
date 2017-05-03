@@ -177,7 +177,6 @@ public class UserServlet extends BaseServlets {// 直接用户相关的servlet
 				} else {
 					regist = realUrl;
 				}
-
 				// 保存登录数据到数据库
 				Login_Log log = new Login_Log();
 				log.setLogin_Account(name);
@@ -234,7 +233,7 @@ public class UserServlet extends BaseServlets {// 直接用户相关的servlet
 		String city = request.getParameter("city");
 		String e_mail = request.getParameter("e_mail");
 		String optionsRadios = request.getParameter("optionsRadios");
-		int classId=Integer.parseInt(request.getParameter("classname"));
+		int classId = Integer.parseInt(request.getParameter("classname"));
 		if ("option2".equals(optionsRadios)) {
 			optionsRadios = "女";
 		} else {
@@ -264,7 +263,7 @@ public class UserServlet extends BaseServlets {// 直接用户相关的servlet
 		student.setPwd(pwd);
 		student.setNickName("飞翔的蚂蚁");
 		student.setPicture("/Images/logo.jpg");
-		ClassName cla=new ClassName();
+		ClassName cla = new ClassName();
 		cla.setClassId(classId);
 		student.setClassId(cla);
 		/*
@@ -441,10 +440,10 @@ public class UserServlet extends BaseServlets {// 直接用户相关的servlet
 
 		}
 		servletUtil.GetNotRedMessageCountToRequest(request);// 将未读的消息数量放入到用户request中
-//		// 首页方案
-//		IndexModel indexModel = new IndexModel();
-//		indexModel = indexModelService.findUseModel();
-//		request.setAttribute("indexModel", indexModel);
+		// // 首页方案
+		// IndexModel indexModel = new IndexModel();
+		// indexModel = indexModelService.findUseModel();
+		// request.setAttribute("indexModel", indexModel);
 		// 菜单
 		List<MenuModel> menuList = menuService.findAllUseMenu();
 		request.setAttribute("menuList", menuList);

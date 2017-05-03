@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.itcast.commons.CommonUtils;
 
+import com.xawl.study.model.Administrator;
 import com.xawl.study.model.Category;
 import com.xawl.study.model.Interest;
 import com.xawl.study.model.Page;
@@ -50,8 +51,19 @@ public class AdminResourceServlet extends BaseServlets {
 		page = PageUtil.createPage(Integer.parseInt(count), 0,
 				Integer.parseInt(pagecount));
 
-		List<Resource> resourceList = resourceService.queryByPage(page);
-		int resourceCount = resourceService.CountResource();
+		Administrator admin = (Administrator) request.getSession()
+				.getAttribute("admin_teacher");
+		List<Resource> resourceList = null;
+		int resourceCount = 0;
+		if (admin.getRank() == 0) {
+			// 管理员全部显示
+			resourceList = resourceService.queryByPage(page);
+			resourceCount = resourceService.CountResource();
+		} else {
+			resourceList = resourceService.queryByPage(page, admin.getId());
+			resourceCount = resourceService.CountResource(admin.getId());
+		}
+
 		int num = Integer.parseInt((String) request.getSession().getAttribute(
 				"count"));// 每页显示的数据数量
 		if ((resourceCount % num) == 0) {
@@ -124,6 +136,8 @@ public class AdminResourceServlet extends BaseServlets {
 		resource.setResourceName(request.getParameter("resourceName"));
 		resource.setResourceType(Integer.parseInt(request
 				.getParameter("resourceType")));
+		int partype = Integer.valueOf(request.getParameter("type"));
+		resource.setType(partype);
 		resource.setResume(request.getParameter("resume"));
 		resource.setScore(Integer.parseInt(request.getParameter("score")));
 		resource.setShowImageSrc(request.getParameter("showImageSrc"));
@@ -359,15 +373,15 @@ public class AdminResourceServlet extends BaseServlets {
 				.getParameter("beLongToDegreeID"));
 		String resume = request.getParameter("resume");
 		int classNameID = Integer.parseInt(request.getParameter("classNameID"));
-		int score = Integer.parseInt(request.getParameter("score"));
 		String showImageSrc = request.getParameter("showImageSrc");
 		int resourceType = Integer.parseInt(request
 				.getParameter("resourceType"));
 		String linkSrc = request.getParameter("linkSrc");
 		String frontClassName = request.getParameter("frontClassName");
-		int likeSum = Integer.parseInt(request.getParameter("likeSum"));
 		DateFormat fmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String data = request.getParameter("uploadeDate");
+		int partype = Integer.valueOf(request.getParameter("type"));
+		resource.setType(partype);
 		Date date;
 		try {
 			date = fmt.parse(data);
@@ -382,12 +396,12 @@ public class AdminResourceServlet extends BaseServlets {
 		resource.setCategory(category);
 		resource.setClassNameID(classNameID);
 		resource.setFrontClassName(frontClassName);
-		resource.setLikeSum(likeSum);
+		resource.setLikeSum(1);
 		resource.setLinkSrc(linkSrc);
 		resource.setResourceName(resourceName);
 		resource.setResourceType(resourceType);
 		resource.setResume(resume);
-		resource.setScore(score);
+		resource.setScore(1);
 		resource.setShowImageSrc(showImageSrc);
 		resource.setSrc(src);
 

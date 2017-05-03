@@ -59,4 +59,24 @@ public class ExamServiceImpl implements ExamService {
 		examDao.addQuest(question);
 	}
 
+	@Override
+	public List<Exam> getAllQuest() {
+		return examDao.getAllQuest();
+	}
+
+	@Override
+	public List<Exam> getAllQuest(int id) {
+		return examDao.getAllQuest(id);
+	}
+
+	@Override
+	public void deleteByPaper(String attribute) {
+		examDao.deleteByPaper(attribute);
+	}
+
+	@Override
+	public void updatePaper(Paper p) {
+		examDao.updatePaper(p);
+	}
+
 }

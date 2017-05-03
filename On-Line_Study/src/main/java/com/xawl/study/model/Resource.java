@@ -26,12 +26,16 @@ public class Resource {
 	private String frontClassName; // 前台class名
 	private int likeSum; // 点赞数
 	private String download_src;// 下载路径
-	private int ok_read; //是否可在线预览
+	private int ok_read; // 是否可在线预览
+	private int type;// 0 表示通用资源，其他表示教师id
 
-	
+	public int getType() {
+		return type;
+	}
 
-
-	
+	public void setType(int type) {
+		this.type = type;
+	}
 
 	public int getOk_read() {
 		return ok_read;

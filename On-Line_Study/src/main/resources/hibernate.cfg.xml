@@ -44,6 +44,8 @@
 		<mapping class="com.xawl.study.model.Question" />
 		<mapping class="com.xawl.study.model.Exam" />
 		<mapping class="com.xawl.study.model.ClassName" />
+
+		<mapping class="com.xawl.study.model.Teach_Class" />
 	</session-factory>
 
 </hibernate-configuration>

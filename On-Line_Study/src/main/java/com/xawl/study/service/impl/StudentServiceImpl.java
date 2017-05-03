@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.xawl.study.dao.impl.StudentDao;
 import com.xawl.study.model.Page;
 import com.xawl.study.model.Student;
+import com.xawl.study.model.Teach_Class;
 import com.xawl.study.service.StudentService;
 import com.xawl.study.util.Md5Util;
 
@@ -99,5 +100,10 @@ public class StudentServiceImpl implements StudentService {
 
 	public int CountStudent() {
 		return sd.CountStudent();
+	}
+
+	@Override
+	public List<Teach_Class> findByClassid(String classid) {
+		return sd.findByClassid(classid);
 	}
 }

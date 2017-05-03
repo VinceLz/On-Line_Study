@@ -25,4 +25,12 @@ public interface ExamService {
 	List<Paper> getAllPaper();
 
 	void addQuest(Question question);
+
+	List<Exam> getAllQuest();
+
+	List<Exam> getAllQuest(int id);
+
+	void deleteByPaper(String attribute);
+
+	void updatePaper(Paper p);
 }

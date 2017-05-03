@@ -3,6 +3,7 @@ package com.xawl.study.servlet;
 import org.apache.commons.io.IOUtils;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
@@ -24,6 +25,7 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.xawl.study.model.Administrator;
 import com.xawl.study.model.Category;
 import com.xawl.study.model.Exam;
 import com.xawl.study.model.IndexModel;
@@ -33,6 +35,7 @@ import com.xawl.study.model.Page;
 import com.xawl.study.model.Paper;
 import com.xawl.study.model.Question;
 import com.xawl.study.model.Student;
+import com.xawl.study.model.Teach_Class;
 import com.xawl.study.service.CategoryService;
 import com.xawl.study.service.CommentService;
 import com.xawl.study.service.ExamService;
@@ -107,7 +110,6 @@ public class ExamServlet extends BaseServlets {
 			page = PageUtil.createPage(12, examService.findAllResourceCount(),
 					page.getTotalPage());
 		}
-		// ---获取资源---
 		List<Paper> resourceList = examService.findAllPaper(page);
 		for (int i = 0; i < resourceList.size(); i++) {// 限制长度
 			resourceList
@@ -398,4 +400,61 @@ public class ExamServlet extends BaseServlets {
 		return null;
 	}
 
+	public String showAll(HttpServletRequest request,
+			HttpServletResponse response) {
+		// 判断是管理员还是老师
+		Administrator admin = (Administrator) request.getSession()
+				.getAttribute("admin_teacher");
+		List<Exam> lsit = null;
+		if (admin.getRank() == 0) {
+			// 管理员
+			lsit = examService.getAllQuest();// 得到全部
+		} else {
+			// 学生 一个老师带多个班
+			lsit = examService.getAllQuest(admin.getId());
+		}
+		System.out.println(lsit.size());
+		request.setAttribute("exam", lsit);
+		return "f:/Admin/examList.jsp";
+	}
+
+	public String showAllPaper(HttpServletRequest request,
+			HttpServletResponse response) {
+		// 判断是管理员还是老师
+		List<Paper> lsit = examService.getAllPaper();// 得到全部
+		request.setAttribute("paper", lsit);
+		return "f:/Admin/paperList.jsp";
+	}
+
+	public String deletePaper(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		// 判断是管理员还是老师
+		String attribute = request.getParameter("paperId");
+		examService.deleteByPaper(attribute);
+		response.getWriter().print("true");
+		return null;
+	}
+
+	public String preSave(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		// 判断是管理员还是老师
+		String attribute = request.getParameter("paperId");
+		Paper byPaper = examService.getByPaper(Integer.valueOf(attribute));
+		request.setAttribute("paper", byPaper);
+		return "f:/Admin/paperSave.jsp";
+	}
+
+	public String updatePaper(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		// 判断是管理员还是老师
+		String pid = request.getParameter("paperId");
+
+		String pname = request.getParameter("paper.paperName");
+		Paper p = new Paper();
+		p.setJoinDate(new Date());
+		p.setId(Integer.valueOf(pid));
+		p.setPaperName(pname);
+		examService.updatePaper(p);
+		return "f:ExamServlet?method=showAllPaper";
+	}
 }

@@ -15,7 +15,7 @@ import com.xawl.study.model.Resource;
  */
 public interface ResourceService {
 
-	public List<Resource> findAllResource(Page page);
+	public List<Resource> findAllResource(Page page, String sql);
 
 	// 按id查资源
 	public Resource findResourceById(int id);
@@ -82,11 +82,15 @@ public interface ResourceService {
 			int interestId, int type);
 
 	// 查找所有文档资源
-	public List<Resource> findAllDocumentResource(Page page);
+	public List<Resource> findAllDocumentResource(Page page, String sql);
 
 	// 查找所有文档资源
 	public List<Resource> findAllDocumentResourceNotPage();
 
 	// 查找所有文档资源数量
 	public int findAllDocumentResourceCount();
+
+	public List<Resource> queryByPage(Page page, int id);
+
+	public int CountResource(int id);
 }

@@ -4,8 +4,11 @@ import java.util.List;
 
 import com.xawl.study.model.Page;
 import com.xawl.study.model.Student;
+import com.xawl.study.model.Teach_Class;
 
 public interface StudentService {
+	
+	List<Teach_Class> findByClassid(String classid);
 
 	public Student StudentLogin(Student student);
 

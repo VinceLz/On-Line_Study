@@ -112,13 +112,20 @@
 								<input class="form-control" type="text" name="classNameID">
 							</div>
 						</div>
-						<div class="form-group">
-							<label class="col-sm-2 col-sm-2 control-label">所需积分:</label>
-							<div class="col-sm-10">
-								<input class="form-control" type="text" name="score">
+						<c:if test="${admin_teacher.rank eq 1}">
+							<div class="form-group">
+								<label class="col-sm-2 col-sm-2 control-label">是否公开:</label>
+								<div class="col-sm-10">
+									<select name="type">
+										<option value="0">是</option>
+										<option value="${admin_tacher.id}">否</option>
+									</select>
+								</div>
 							</div>
-						</div>
-
+						</c:if>
+						<c:if test="${admin_teacher.rank eq 0}">
+							<input type="hidden" name="type" value="0" />
+						</c:if>
 						<div class="form-group">
 							<label class="col-sm-2 col-sm-2 control-label">资源类型:</label>
 							<div class="col-sm-10">
@@ -142,14 +149,6 @@
 							<div class="col-sm-10">
 								<input class="form-control" type="text" name="frontClassName"
 									value="courseIntroduce">
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label class="col-sm-2 col-sm-2 control-label">点赞数:</label>
-							<div class="col-sm-10">
-								<input class="form-control" type="text" name="likeSum"
-									value="123">
 							</div>
 						</div>
 				</div>

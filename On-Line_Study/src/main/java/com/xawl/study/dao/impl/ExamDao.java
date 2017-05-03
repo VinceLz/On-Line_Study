@@ -66,10 +66,36 @@ public class ExamDao extends BaseDaoImpl<Paper> {
 		List list = currentSession.createQuery("from Paper").list();
 		return list;
 	}
-	
+
 	public void addQuest(Question question) {
 		Session currentSession = getSessionFactory().getCurrentSession();
 		currentSession.save(question);
 	}
 
+	public List<Exam> getAllQuest() {
+		Session session = getSessionFactory().getCurrentSession();
+		List list = session.createQuery("from Exam").list();
+		return list;
+	}
+
+	public List<Exam> getAllQuest(int id) {
+		Session session = getSessionFactory().getCurrentSession();
+		List list = session
+				.createQuery(
+						"from Exam e where e.student.id in (select s.id from Teach_Class t,Student s where t.classid=s.classId and t.aid="
+								+ id + ")").list();
+		return list;
+	}
+
+	public void deleteByPaper(String attribute) {
+		Session session = getSessionFactory().getCurrentSession();
+		Paper p = new Paper();
+		p.setId(Integer.valueOf(attribute));
+		session.delete(p);
+	}
+
+	public void updatePaper(Paper p) {
+		Session currentSession = getSessionFactory().getCurrentSession();
+		currentSession.update(p);
+	}
 }

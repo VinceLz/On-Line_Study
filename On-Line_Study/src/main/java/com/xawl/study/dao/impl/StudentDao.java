@@ -9,8 +9,10 @@ import org.springframework.stereotype.Repository;
 
 import com.xawl.study.model.Page;
 import com.xawl.study.model.Student;
+import com.xawl.study.model.Teach_Class;
+
 @Repository
-public class StudentDao extends BaseDaoImpl{
+public class StudentDao extends BaseDaoImpl {
 
 	public StudentDao() {
 		// TODO Auto-generated constructor stub
@@ -23,12 +25,19 @@ public class StudentDao extends BaseDaoImpl{
 		 * .getCurrentSession();
 		 */
 		Session session = getSessionFactory().getCurrentSession();
-		Query query = session
-				.createQuery("from Student as s where s.account='" + account
-						+ "'");
+		Query query = session.createQuery("from Student as s where s.account='"
+				+ account + "'");
 		stu = (Student) query.uniqueResult();
 
 		return stu;
+	}
+
+	public List<Teach_Class> findByClassid(String classid) {// 按照用户名查找用户信息
+
+		Session session = getSessionFactory().getCurrentSession();
+		List list = session.createQuery(
+				"from Teach_Class t where t.classid=" + classid).list();
+		return list;
 	}
 
 	public Student findUserByEmail(String email) {// 按照用户邮箱查找单个用户信息
@@ -71,9 +80,8 @@ public class StudentDao extends BaseDaoImpl{
 	public boolean deleteUserByAccount(String account) {// 按照用户账号删除用户，返回值表示删除的结果
 		boolean isok = false;
 		Session session = getSessionFactory().getCurrentSession();
-		Query query = session
-				.createQuery("from Student as s where s.account='" + account
-						+ "'");
+		Query query = session.createQuery("from Student as s where s.account='"
+				+ account + "'");
 		Student s = (Student) query.uniqueResult();
 		try {
 			s.setAccount(account);
@@ -89,8 +97,8 @@ public class StudentDao extends BaseDaoImpl{
 	public boolean deleteUserByEmail(String email) {// 按照用户邮箱删除用户，返回值表示删除的结果
 		boolean isok = false;
 		Session session = getSessionFactory().getCurrentSession();
-		Query query = session
-				.createQuery("from Student as s where s.e_mail='" + email + "'");
+		Query query = session.createQuery("from Student as s where s.e_mail='"
+				+ email + "'");
 		Student s = (Student) query.uniqueResult();
 		try {
 			s.setE_mail(email);
@@ -106,9 +114,8 @@ public class StudentDao extends BaseDaoImpl{
 	public boolean updateUserByAccount(String account, Student stu) {// 通过账号更新用户信息
 		boolean isok = false;
 		Session session = getSessionFactory().getCurrentSession();
-		Query query = session
-				.createQuery("from Student as s where s.account='" + account
-						+ "'");
+		Query query = session.createQuery("from Student as s where s.account='"
+				+ account + "'");
 		Student s = (Student) query.uniqueResult();
 		try {
 			String id = s.getId();
@@ -129,8 +136,8 @@ public class StudentDao extends BaseDaoImpl{
 	public boolean updateUserByEmail(String email, Student stu) {// 通过邮箱更新用户信息
 		boolean isok = false;
 		Session session = getSessionFactory().getCurrentSession();
-		Query query = session
-				.createQuery("from Student as s where s.e_mail='" + email + "'");
+		Query query = session.createQuery("from Student as s where s.e_mail='"
+				+ email + "'");
 		Student s = (Student) query.uniqueResult();
 		try {
 			String id = s.getId();
@@ -169,7 +176,7 @@ public class StudentDao extends BaseDaoImpl{
 				return student;
 				// isok=true;
 			}
-			
+
 			// return isok;
 		} catch (Exception e) {
 			// return isok;
@@ -188,13 +195,13 @@ public class StudentDao extends BaseDaoImpl{
 		try {
 			student = (Student) query.uniqueResult();
 			if (student.getPwd().equals(password)) {
-				
+
 				return student;
 			}
 		} catch (Exception e) {
 			// isok = false;
 		}
-		
+
 		return null;
 	}
 
@@ -207,7 +214,7 @@ public class StudentDao extends BaseDaoImpl{
 		// 设置起点
 		query.setFirstResult(page.getBeginIndex());
 		stu = query.list();
-		
+
 		return stu;
 	}
 
@@ -218,7 +225,7 @@ public class StudentDao extends BaseDaoImpl{
 		List<Student> stu = new ArrayList<Student>();
 		stu = query.list();
 		sum = stu.size();
-		
+
 		return sum;
 	}
 }

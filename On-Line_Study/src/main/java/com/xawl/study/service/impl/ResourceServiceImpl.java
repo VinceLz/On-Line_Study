@@ -9,14 +9,15 @@ import com.xawl.study.dao.impl.ResourceDao;
 import com.xawl.study.model.Page;
 import com.xawl.study.model.Resource;
 import com.xawl.study.service.ResourceService;
+
 @Service
-public class ResourceServiceImpl implements ResourceService{
+public class ResourceServiceImpl implements ResourceService {
 	@Autowired
 	ResourceDao resourceDao;
 
 	// 查找所有资源
-	public List<Resource> findAllResource(Page page) {
-		return resourceDao.findAllResource(page);
+	public List<Resource> findAllResource(Page page, String sql) {
+		return resourceDao.findAllResource(page, sql);
 	}
 
 	// 按id查资源
@@ -159,8 +160,8 @@ public class ResourceServiceImpl implements ResourceService{
 	}
 
 	// 查找所有文档资源
-	public List<Resource> findAllDocumentResource(Page page) {
-		return resourceDao.findAllDocumentResource(page);
+	public List<Resource> findAllDocumentResource(Page page, String sql) {
+		return resourceDao.findAllDocumentResource(page, sql);
 	}
 
 	// 查找所有文档资源
@@ -172,5 +173,15 @@ public class ResourceServiceImpl implements ResourceService{
 	public int findAllDocumentResourceCount() {
 		return resourceDao.findAllDocumentResourceCount();
 	}
-	
+
+	@Override
+	public List<Resource> queryByPage(Page page, int id) {
+		return resourceDao.queryByPage(page, id);
+	}
+
+	@Override
+	public int CountResource(int id) {
+		return resourceDao.CountResource(id);
+	}
+
 }
